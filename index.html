@@ -1,319 +1,1324 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Calculadora de Créditos Colombia (V2.0)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InsolvBaq · Tu segunda oportunidad financiera</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
+        /* ============================================
+                   RESET Y BASE
+                   ============================================ */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
         }
         body {
-            background-color: #0f172a;
-            color: #f1f5f9;
-            padding: 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F5F7FA;
+            color: #0B2B4A;
+            line-height: 1.5;
+            scroll-behavior: smooth;
         }
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            background: #1e293b;
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-            border: 1px solid #334155;
+            padding: 0 24px;
         }
-        header {
-            text-align: center;
-            margin-bottom: 35px;
-            border-bottom: 1px solid #334155;
-            padding-bottom: 25px;
+        a {
+            text-decoration: none;
+            color: inherit;
         }
-        h1 { color: #38bdf8; font-size: 28px; margin-bottom: 8px; }
-        p.subtitle { color: #94a3b8; font-size: 14px; }
-        .badge {
-            background: #0284c7;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
-            font-weight: 600;
-            vertical-align: middle;
-            margin-left: 8px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 35px;
-        }
-        @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-        .form-group {
-            margin-bottom: 22px;
-        }
-        label {
+        img {
+            max-width: 100%;
             display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #94a3b8;
-            font-size: 14px;
         }
-        input, select {
-            width: 100%;
-            padding: 12px 14px;
-            border: 1px solid #475569;
-            border-radius: 8px;
-            font-size: 15px;
-            background-color: #0f172a;
-            color: white;
-            transition: all 0.3s;
+
+        /* ============================================
+                   UTILIDADES Y COMPONENTES
+                   ============================================ */
+        .section-label {
+            display: inline-block;
+            font-weight: 600;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #C9A84C;
+            background: rgba(201, 168, 76, 0.08);
+            padding: 6px 18px;
+            border-radius: 60px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(201, 168, 76, 0.15);
         }
-        input:focus, select:focus {
-            outline: none;
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        h2 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            color: #0B2B4A;
         }
-        .results-box {
-            background-color: #0f172a;
-            border-radius: 12px;
-            padding: 25px;
-            border-top: 4px solid #38bdf8;
+        .text-gold {
+            color: #C9A84C;
         }
-        .result-item {
-            display: flex;
-            justify-content: space-between;
+        .text-light {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Botones */
+        .btn-primary {
+            background: #C9A84C;
+            border: none;
+            color: #0B2B4A;
+            padding: 16px 40px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border-radius: 60px;
+            box-shadow: 0 8px 24px rgba(201, 168, 76, 0.30);
+            transition: all 0.25s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            transform: scale(0.8);
+        }
+        .btn-primary:hover::after {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .btn-primary:hover {
+            background: #b8973a;
+            transform: translateY(-4px);
+            box-shadow: 0 16px 32px rgba(201, 168, 76, 0.40);
+        }
+        .btn-primary:active {
+            transform: translateY(0px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #C9A84C;
+            color: #C9A84C;
+            padding: 14px 34px;
+            font-weight: 600;
+            font-size: 1rem;
+            border-radius: 60px;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn-outline:hover {
+            background: #C9A84C;
+            color: #0B2B4A;
+            box-shadow: 0 8px 20px rgba(201, 168, 76, 0.20);
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+                   HEADER STICKY
+                   ============================================ */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            background: rgba(11, 43, 74, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.12);
             padding: 14px 0;
-            border-bottom: 1px solid #334155;
+            transition: 0.3s;
         }
-        .result-item:last-child { border-bottom: none; }
-        .result-label { font-weight: 500; color: #94a3b8; }
-        .result-value { font-weight: 700; color: #f8fafc; font-size: 18px; }
-        .highlight { color: #34d399; font-size: 22px; }
-        .info-card {
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-size: 13px;
-            color: #cbd5e1;
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .logo span {
+            color: #C9A84C;
+        }
+        .logo i {
+            color: #C9A84C;
+            font-size: 1.8rem;
+        }
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .nav-links a {
+            transition: 0.2s;
+            font-size: 0.95rem;
+            position: relative;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #C9A84C;
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        .nav-links a:hover {
+            color: #C9A84C;
+        }
+        .nav-cta {
+            background: #C9A84C;
+            color: #0B2B4A !important;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+        }
+        .nav-cta::after {
+            display: none !important;
+        }
+        .nav-cta:hover {
+            background: #b8973a !important;
+            color: #0B2B4A !important;
+            transform: translateY(-2px);
+        }
+
+        /* ============================================
+                   HERO
+                   ============================================ */
+        .hero {
+            padding: 60px 0 80px;
+            background: #0B2B4A;
+            color: #fff;
+            border-bottom: 4px solid #C9A84C;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201, 168, 76, 0.05) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .hero .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 48px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-content {
+            flex: 1 1 500px;
+        }
+        .hero-content .badge {
+            background: rgba(201, 168, 76, 0.12);
+            color: #C9A84C;
+            font-weight: 600;
+            padding: 6px 18px;
+            border-radius: 60px;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 18px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+            animation: pulse-badge 2.5s ease-in-out infinite;
+        }
+        @keyframes pulse-badge {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.2);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(201, 168, 76, 0.05);
+            }
+        }
+        .hero-content .subtitle {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+            letter-spacing: 0.3px;
+        }
+        .hero-content h1 {
+            font-size: 4.2rem;
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+        .hero-content h1 span {
+            color: #C9A84C;
+        }
+        .hero-content p {
+            font-size: 1.15rem;
+            color: rgba(255, 255, 255, 0.75);
+            max-width: 480px;
+            margin-bottom: 32px;
+            font-weight: 400;
+            line-height: 1.7;
+        }
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+        }
+        .hero-stat {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-top: 32px;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.95rem;
+        }
+        .hero-stat-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+        .hero-stat-item i {
+            color: #C9A84C;
+            font-size: 1.6rem;
+        }
+
+        .hero-visual {
+            flex: 1 1 380px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 60px 60px 60px 20px;
+            padding: 28px 28px 36px;
+            border: 1px solid rgba(201, 168, 76, 0.12);
+            position: relative;
+            min-height: 280px;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+        .hero-visual-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 32px;
+            padding: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .hero-visual-card p {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+        .hero-visual-card p i {
+            color: #C9A84C;
+            width: 28px;
+            font-size: 1.4rem;
+        }
+        .hero-visual-card small {
+            color: rgba(255, 255, 255, 0.5);
+            display: block;
+            margin-top: 14px;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+        .floating-badge {
+            position: absolute;
+            background: rgba(201, 168, 76, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #0B2B4A;
+            padding: 12px 22px;
+            border-radius: 40px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            top: -14px;
+            right: 20px;
+            box-shadow: 0 8px 30px rgba(201, 168, 76, 0.25);
+            font-size: 0.9rem;
+            animation: float-badge 3s ease-in-out infinite;
+        }
+        @keyframes float-badge {
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+        .floating-badge i {
+            font-size: 1.2rem;
+        }
+
+        /* ============================================
+                   SECCIÓN QUÉ ES
+                   ============================================ */
+        .section-what {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .what-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            margin-top: 24px;
+        }
+        .what-text {
+            flex: 1 1 400px;
+        }
+        .what-text p {
+            font-size: 1.1rem;
+            color: #1f3a4b;
+            max-width: 560px;
+            line-height: 1.8;
+        }
+        .what-text p i {
+            color: #C9A84C;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        .what-text .highlight {
+            color: #0B2B4A;
+            font-weight: 700;
+        }
+        .what-icons {
+            flex: 1 1 300px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .what-icon-item {
+            background: #F5F7FA;
+            border-radius: 24px;
+            padding: 28px 16px;
+            text-align: center;
+            border: 1px solid rgba(11, 43, 74, 0.04);
+            transition: all 0.3s ease;
+        }
+        .what-icon-item:hover {
+            transform: translateY(-6px);
+            border-color: #C9A84C;
+            box-shadow: 0 12px 24px rgba(11, 43, 74, 0.06);
+        }
+        .what-icon-item i {
+            font-size: 2.4rem;
+            color: #C9A84C;
+            margin-bottom: 10px;
+        }
+        .what-icon-item h4 {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        .what-icon-item p {
+            font-size: 0.85rem;
+            color: #3a5f73;
+            margin-top: 4px;
+        }
+
+        /* ============================================
+                   SERVICIOS
+                   ============================================ */
+        .services {
+            padding: 80px 0;
+            background: #F5F7FA;
+        }
+        .services-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 32px;
+        }
+        .service-card {
+            background: #fff;
+            padding: 40px 28px;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(11, 43, 74, 0.04);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #C9A84C, #e8d08a);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        .service-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -12px rgba(11, 43, 74, 0.10);
+            border-color: rgba(201, 168, 76, 0.15);
+        }
+        .service-card i {
+            font-size: 2.8rem;
+            color: #C9A84C;
+            margin-bottom: 20px;
+        }
+        .service-card h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .service-card p {
+            color: #3a5f73;
+            font-size: 0.95rem;
             line-height: 1.6;
         }
-        .tabs-container {
+
+        /* ============================================
+                   BENEFICIOS
+                   ============================================ */
+        .benefits {
+            padding: 80px 0;
+            background: #0B2B4A;
+            color: #fff;
+        }
+        .benefits .section-label {
+            background: rgba(201, 168, 76, 0.10);
+            border-color: rgba(201, 168, 76, 0.15);
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-top: 48px;
+        }
+        .benefit-item {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .benefit-item:hover {
+            transform: translateY(-4px);
+        }
+        .benefit-item .icon-wrap {
+            background: rgba(201, 168, 76, 0.10);
+            width: 72px;
+            height: 72px;
+            border-radius: 30px;
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            background: #0f172a;
-            padding: 6px;
-            border-radius: 8px;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 2.2rem;
+            color: #C9A84C;
+            transition: all 0.3s ease;
         }
-        .tab-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: #94a3b8;
-            padding: 10px;
-            border-radius: 6px;
-            cursor: pointer;
+        .benefit-item:hover .icon-wrap {
+            background: rgba(201, 168, 76, 0.20);
+            transform: scale(1.05);
+        }
+        .benefit-item h4 {
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #fff;
+        }
+        .benefit-item p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* ============================================
+                   TESTIMONIOS
+                   ============================================ */
+        .testimonials {
+            padding: 80px 0;
+            background: #fff;
+        }
+        .testimonials-header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        .testimonial-card {
+            background: #F5F7FA;
+            padding: 32px 28px;
+            border-radius: 32px;
+            border: 1px solid rgba(11, 43, 74, 0.04);
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            border-color: rgba(201, 168, 76, 0.25);
+            box-shadow: 0 12px 28px rgba(11, 43, 74, 0.04);
+            transform: translateY(-4px);
+        }
+        .testimonial-card .stars {
+            color: #C9A84C;
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+        .testimonial-card blockquote {
+            font-style: normal;
+            font-weight: 400;
+            color: #1f3a4b;
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+        .testimonial-card .author {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .testimonial-card .author img {
+            width: 52px;
+            height: 52px;
+            border-radius: 60px;
+            object-fit: cover;
+            border: 2px solid #C9A84C;
+            transition: transform 0.3s ease;
+        }
+        .testimonial-card:hover .author img {
+            transform: scale(1.05);
+        }
+        .testimonial-card .author div {
             font-weight: 600;
-            font-size: 14px;
-            transition: all 0.2s;
+            font-size: 0.95rem;
         }
-        .tab-btn.active {
-            background: #38bdf8;
-            color: #0f172a;
+        .testimonial-card .author div .verified {
+            color: #C9A84C;
+            margin-left: 4px;
+            font-size: 0.8rem;
+        }
+        .testimonial-card .author div small {
+            display: block;
+            font-weight: 400;
+            color: #3a5f73;
+            font-size: 0.8rem;
+            margin-top: 2px;
+        }
+
+        /* ============================================
+                   FORMULARIO
+                   ============================================ */
+        .contact {
+            padding: 80px 0;
+            background: #F5F7FA;
+        }
+        .contact-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 48px;
+            align-items: flex-start;
+        }
+        .contact-info {
+            flex: 1 1 300px;
+        }
+        .contact-info h2 {
+            margin-bottom: 16px;
+        }
+        .contact-info p {
+            color: #1f3a4b;
+            max-width: 340px;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+        .contact-info .detail {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .contact-info .detail:hover {
+            color: #0B2B4A;
+        }
+        .contact-info .detail i {
+            color: #C9A84C;
+            width: 24px;
+            font-size: 1.2rem;
+        }
+        .contact-form {
+            flex: 1 1 400px;
+            background: #fff;
+            padding: 40px 36px;
+            border-radius: 40px;
+            box-shadow: 0 8px 32px rgba(11, 43, 74, 0.04);
+            border: 1px solid rgba(11, 43, 74, 0.04);
+            transition: box-shadow 0.3s ease;
+        }
+        .contact-form:hover {
+            box-shadow: 0 16px 48px rgba(11, 43, 74, 0.06);
+        }
+        .contact-form .form-group {
+            margin-bottom: 20px;
+        }
+        .contact-form label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: block;
+            margin-bottom: 6px;
+            color: #0B2B4A;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1.5px solid #e8ecf0;
+            border-radius: 30px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.25s ease;
+            background: #F5F7FA;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: #C9A84C;
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.08);
+        }
+        .contact-form input::placeholder,
+        .contact-form textarea::placeholder {
+            color: #a0b4c4;
+        }
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 100px;
+            border-radius: 24px;
+        }
+        .contact-form .error-msg {
+            color: #b91c1c;
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+            padding-left: 8px;
+        }
+        .contact-form .error-msg.visible {
+            display: block;
+        }
+        .contact-form .form-success {
+            display: none;
+            background: #e6f7e6;
+            padding: 16px 20px;
+            border-radius: 30px;
+            color: #0b5e0b;
+            font-weight: 500;
+            margin-top: 16px;
+            text-align: center;
+            border: 1px solid #b8e0b8;
+        }
+        .contact-form .form-success.visible {
+            display: block;
+        }
+        .contact-form .btn-primary {
+            width: 100%;
+            justify-content: center;
+            margin-top: 8px;
+        }
+
+        /* ============================================
+                   FOOTER
+                   ============================================ */
+        .footer {
+            background: #0B2B4A;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 40px 0 28px;
+            border-top: 2px solid rgba(201, 168, 76, 0.08);
+        }
+        .footer .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .footer-brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+        }
+        .footer-brand span {
+            color: #C9A84C;
+        }
+        .footer p {
+            font-size: 0.9rem;
+        }
+        .footer-socials a {
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: 20px;
+            font-size: 1.4rem;
+            transition: all 0.25s ease;
+            display: inline-block;
+        }
+        .footer-socials a:hover {
+            color: #C9A84C;
+            transform: translateY(-3px);
+        }
+        .footer-legal {
+            font-size: 0.85rem;
+            margin-top: 12px;
+            width: 100%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+        }
+        .footer-legal a {
+            color: #C9A84C;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .footer-legal a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #C9A84C;
+            transition: width 0.3s ease;
+        }
+        .footer-legal a:hover::after {
+            width: 100%;
+        }
+
+        /* ============================================
+                   ANIMACIONES SCROLL (Intersection Observer)
+                   ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+
+        /* ============================================
+                   RESPONSIVE
+                   ============================================ */
+        @media (max-width: 768px) {
+            .header .container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 14px;
+            }
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+            .hero-visual {
+                min-height: 200px;
+            }
+            .floating-badge {
+                top: -8px;
+                right: 12px;
+                font-size: 0.75rem;
+                padding: 8px 16px;
+            }
+            .what-icons {
+                grid-template-columns: 1fr 1fr;
+            }
+            .contact-form {
+                padding: 28px 20px;
+            }
+            .hero-stat {
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+            h2 {
+                font-size: 2.2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+            .what-icons {
+                grid-template-columns: 1fr;
+            }
+            .btn-primary {
+                width: 100%;
+                justify-content: center;
+            }
+            .btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
+            .hero-actions {
+                flex-direction: column;
+                width: 100%;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Simulador Multicrédito Colombiano <span class="badge">V2.0 PRO</span></h1>
-            <p class="subtitle">Simulación avanzada: Vivienda, Vehículo, Consumo y Tarjetas con tasas de usura y seguros estimados</p>
-        </header>
 
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="cambiarTipo('hipotecario')">🏠 Hipotecario / Leasing</button>
-            <button class="tab-btn" onclick="cambiarTipo('vehiculo')">🚗 Vehículo</button>
-            <button class="tab-btn" onclick="cambiarTipo('libre')">💰 Libre Inversión</button>
-            <button class="tab-btn" onclick="cambiarTipo('tarjeta')">💳 Tarjeta de Crédito</button>
+    <!-- ============================================
+    HEADER STICKY
+    ============================================ -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-scale-balanced"></i> Insolv<span>Baq</span>
+            </div>
+            <nav class="nav-links" role="navigation" aria-label="Menú principal">
+                <a href="#que-es">¿Qué es?</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#beneficios">Beneficios</a>
+                <a href="#testimonios">Testimonios</a>
+                <a href="#contacto" class="nav-cta"><i class="fas fa-calendar-check"></i> Consultoría</a>
+            </nav>
         </div>
-        
-        <div class="grid">
-            <div>
-                <div class="form-group">
-                    <label id="lblMonto" for="montoPrincipal">Monto Total del Crédito / Valor Inmueble ($ COP)</label>
-                    <input type="number" id="montoPrincipal" value="150000000" step="5000000">
-                </div>
-                
-                <div class="form-group" id="divCuotaInicial">
-                    <label for="cuotaInicial">Cuota Inicial ($ COP)</label>
-                    <input type="number" id="cuotaInicial" value="45000000" step="5000000">
-                </div>
+    </header>
 
-                <div class="form-group" id="divAmortizacion">
-                    <label for="tipoSistema">Modalidad de Moneda</label>
-                    <select id="tipoSistema">
-                        <option value="pesos">Pesos Colombianos (Cuota Fija)</option>
-                        <option value="uvr">UVR (Indexado a Inflación / IPC)</option>
-                    </select>
+    <!-- ============================================
+    HERO
+    ============================================ -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+        <div class="container">
+            <div class="hero-content">
+                <span class="badge"><i class="fas fa-gavel"></i> Ley 2445 de 2025</span>
+                <p class="subtitle">Protege tu patrimonio · Recupera tu tranquilidad</p>
+                <h1 id="hero-title">Tu segunda oportunidad <span>financiera</span> comienza aquí</h1>
+                <p>Te guío paso a paso en la ley de insolvencia para persona natural. Negociamos deudas, detenemos embargos y construimos un plan a tu medida.</p>
+                <div class="hero-actions">
+                    <a href="#contacto" class="btn-primary"><i class="fas fa-whatsapp"></i> Consultoría gratis</a>
+                    <a href="#que-es" class="btn-outline"><i class="fas fa-circle-info"></i> Conocer más</a>
                 </div>
-
-                <div class="form-group">
-                    <label for="tasaAnual">Tasa de Interés Nominal/Efectiva Propuesta (E.A. %)</label>
-                    <input type="number" id="tasaAnual" value="11.8" step="0.05">
-                </div>
-
-                <div class="form-group">
-                    <label id="lblPlazo" for="plazo">Plazo de Amortización (Meses)</label>
-                    <input type="number" id="plazo" value="180" min="1" max="360">
-                </div>
-
-                <div class="form-group">
-                    <label for="seguroMes">Seguro de Vida Obligatorio + Todo Riesgo Estimado (Mensual $ COP)</label>
-                    <input type="number" id="seguroMes" value="45000" step="5000">
+                <div class="hero-stat">
+                    <span class="hero-stat-item"><i class="fas fa-user-check"></i> +120 asesorías</span>
+                    <span class="hero-stat-item"><i class="fas fa-handshake"></i> 94% acuerdos</span>
+                    <span class="hero-stat-item"><i class="fas fa-star"></i> 4.9/5</span>
                 </div>
             </div>
-            
-            <div>
-                <h2 style="font-size: 18px; margin-bottom: 15px; color: #38bdf8;">Análisis Financiero del Escenario</h2>
-                <div class="results-box">
-                    <div class="result-item">
-                        <span class="result-label">Capital Neto a Financiar</span>
-                        <span class="result-value" id="resFinanciar">$ 0</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Tasa Periódica Mes Vencido (M.V.)</span>
-                        <span class="result-value" id="resTasaMes">0.00%</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Cuota Base (Solo Capital + Interés)</span>
-                        <span class="result-value" id="resCuotaBase">$ 0</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Seguros Mensuales Adicionados</span>
-                        <span class="result-value" id="resSeguro">$ 0</span>
-                    </div>
-                    <div class="result-item" style="background: rgba(52, 211, 153, 0.05); padding: 10px; border-radius: 6px;">
-                        <span class="result-label" style="color: #34d399; font-weight: 600;">CUOTA MENSUAL TOTAL</span>
-                        <span class="result-value highlight" id="resCuotaTotal">$ 0</span>
-                    </div>
-                    <div class="result-item">
-                        <span class="result-label">Costo Total de Intereses Generados</span>
-                        <span class="result-value" id="resIntereses">$ 0</span>
-                    </div>
+            <div class="hero-visual">
+                <div class="floating-badge">
+                    <i class="fas fa-shield-halved"></i> Protección inmediata
                 </div>
-                
-                <div class="info-card" id="infoDinamica">
-                    <strong>Análisis del Sistema:</strong> Los créditos hipotecarios en Colombia permiten plazos amplios y tasas competitivas. Recuerde validar si aplica a subsidios del gobierno (Mi Casa Ya / Cobertura FRECH).
+                <div class="hero-visual-card">
+                    <p><i class="fas fa-check-circle"></i> Suspensión de embargos</p>
+                    <p><i class="fas fa-check-circle"></i> Negociación de deudas</p>
+                    <p><i class="fas fa-check-circle"></i> Plan de pago a tu medida</p>
+                    <small><i class="far fa-clock"></i> Proceso ágil, confidencial y humano</small>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
+    <!-- ============================================
+    QUÉ ES LA INSOLVENCIA
+    ============================================ -->
+    <section class="section-what" id="que-es" aria-labelledby="what-title">
+        <div class="container">
+            <span class="section-label"><i class="fas fa-info-circle"></i> Entendiendo la insolvencia</span>
+            <h2 id="what-title">¿Qué es la <span class="text-gold">insolvencia económica</span>?</h2>
+            <div class="what-grid reveal">
+                <div class="what-text">
+                    <p><i class="fas fa-check-circle"></i> Es un <span class="highlight">mecanismo legal</span> que te permite <strong>negociar tus deudas</strong> con acreedores cuando no puedes pagarlas.</p>
+                    <p style="margin-top: 16px;"><i class="fas fa-check-circle"></i> <span class="highlight">No es un fracaso</span>, es una herramienta de protección para personas que, como tú, buscan un nuevo comienzo.</p>
+                    <p style="margin-top: 16px;"><i class="fas fa-check-circle"></i> Con la nueva <span class="highlight">Ley 2445</span>, el proceso es más ágil, protege tu empleo y detiene los cobros judiciales de inmediato.</p>
+                    <p style="margin-top: 20px; font-weight: 500; color: #0B2B4A;"><i class="fas fa-heart" style="color: #C9A84C;"></i> No estás solo. Te acompañamos en cada paso.</p>
+                </div>
+                <div class="what-icons">
+                    <div class="what-icon-item">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h4>Empatía</h4>
+                        <p>Te escuchamos sin juicios</p>
+                    </div>
+                    <div class="what-icon-item">
+                        <i class="fas fa-scale-balanced"></i>
+                        <h4>Justicia</h4>
+                        <p>Acuerdos justos para todos</p>
+                    </div>
+                    <div class="what-icon-item">
+                        <i class="fas fa-shield"></i>
+                        <h4>Protección</h4>
+                        <p>Tu patrimonio a salvo</p>
+                    </div>
+                    <div class="what-icon-item">
+                        <i class="fas fa-clock"></i>
+                        <h4>Agilidad</h4>
+                        <p>Proceso en 60 días</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    SERVICIOS
+    ============================================ -->
+    <section class="services" id="servicios" aria-labelledby="services-title">
+        <div class="container">
+            <div class="services-header reveal">
+                <span class="section-label"><i class="fas fa-briefcase"></i> Especialidad</span>
+                <h2 id="services-title">Asesoría <span class="text-gold">integral en insolvencia</span></h2>
+                <p style="color: #315b72; max-width: 600px; margin: 12px auto 0;">Te acompaño en cada etapa: desde el diagnóstico hasta la firma del acuerdo o la liquidación patrimonial.</p>
+            </div>
+            <div class="services-grid reveal">
+                <div class="service-card reveal-delay-1">
+                    <i class="fas fa-file-signature"></i>
+                    <h3>Diagnóstico legal</h3>
+                    <p>Evaluamos tu situación, verificamos requisitos de cesación de pagos y definimos la mejor ruta para ti.</p>
+                </div>
+                <div class="service-card reveal-delay-2">
+                    <i class="fas fa-hand-holding-dollar"></i>
+                    <h3>Negociación de deudas</h3>
+                    <p>Reduzco intereses, amplío plazos y logro acuerdos con tus acreedores para que puedas pagar sin ahogarte.</p>
+                </div>
+                <div class="service-card reveal-delay-3">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Liquidación patrimonial</h3>
+                    <p>Si es necesario, gestionamos la liquidación ordenada y convertimos saldos en obligaciones naturales.</p>
+                </div>
+                <div class="service-card reveal-delay-1">
+                    <i class="fas fa-shield"></i>
+                    <h3>Protección inmediata</h3>
+                    <p>Detenemos embargos, libranzas y cobros judiciales desde el día 1 de la solicitud.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    BENEFICIOS
+    ============================================ -->
+    <section class="benefits" id="beneficios" aria-labelledby="benefits-title">
+        <div class="container">
+            <div style="text-align: center;" class="reveal">
+                <span class="section-label"><i class="fas fa-star"></i> Por qué InsolvBaq</span>
+                <h2 id="benefits-title" style="color: #fff;">Confianza y <span class="text-gold">resultados reales</span></h2>
+            </div>
+            <div class="benefits-grid reveal">
+                <div class="benefit-item">
+                    <div class="icon-wrap"><i class="fas fa-scale-balanced"></i></div>
+                    <h4>Ley 2445 actualizada</h4>
+                    <p>Conozco los nuevos beneficios: 30% de deudas en mora, suspensión de libranzas y más.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon-wrap"><i class="fas fa-clock"></i></div>
+                    <h4>Proceso en 60 días</h4>
+                    <p>Trámite ágil ante centros de conciliación o notarías, con posibilidad virtual.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon-wrap"><i class="fas fa-lock"></i></div>
+                    <h4>Confidencialidad</h4>
+                    <p>Toda la información se maneja con absoluta discreción y ética profesional.</p>
+                </div>
+                <div class="benefit-item">
+                    <div class="icon-wrap"><i class="fas fa-handshake"></i></div>
+                    <h4>Enfoque humano</h4>
+                    <p>Priorizo tu bienestar y el de tu familia, con soluciones sostenibles.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    TESTIMONIOS
+    ============================================ -->
+    <section class="testimonials" id="testimonios" aria-labelledby="testimonials-title">
+        <div class="container">
+            <div class="testimonials-header reveal">
+                <span class="section-label"><i class="fas fa-quote-left"></i> Experiencias reales</span>
+                <h2 id="testimonials-title">Lo que dicen <span class="text-gold">quienes confiaron</span></h2>
+            </div>
+            <div class="testimonial-grid reveal">
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <blockquote>“InsolvBaq me ayudó a negociar más de 80 millones en deudas. Detuvieron los embargos y hoy estoy pagando sin ahogarme. Cambió mi vida.”</blockquote>
+                    <div class="author">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face" alt="Foto de Carolina" />
+                        <div>Carolina M. <span class="verified"><i class="fas fa-check-circle"></i></span><small>Barranquilla</small></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <blockquote>“Excelente asesoría. En menos de 45 días logramos un acuerdo con todos mis acreedores. Recomiendo 100%.”</blockquote>
+                    <div class="author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face" alt="Foto de Fernando" />
+                        <div>Fernando R. <span class="verified"><i class="fas fa-check-circle"></i></span><small>Bogotá</small></div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    <blockquote>“La tranquilidad de saber que mis deudas están en orden no tiene precio. InsolvBaq me dio un respiro financiero.”</blockquote>
+                    <div class="author">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face" alt="Foto de Andrea" />
+                        <div>Andrea P. <span class="verified"><i class="fas fa-check-circle"></i></span><small>Medellín</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    CONTACTO / FORMULARIO
+    ============================================ -->
+    <section class="contact" id="contacto" aria-labelledby="contact-title">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info reveal">
+                    <span class="section-label"><i class="fas fa-envelope"></i> Contáctanos</span>
+                    <h2 id="contact-title">Empieza tu <span class="text-gold">nuevo camino</span></h2>
+                    <p>Déjanos tus datos y te asesoraremos sin compromiso. La primera consulta es gratuita.</p>
+                    <div class="detail"><i class="fas fa-phone-alt"></i> +57 300 555 4667</div>
+                    <div class="detail"><i class="fas fa-envelope"></i> bhc@insolvbaq.co</div>
+                    <div class="detail"><i class="fas fa-map-pin"></i> Barranquilla, Colombia</div>
+                </div>
+                <div class="contact-form reveal" role="form" aria-label="Formulario de contacto">
+                    <form id="contactForm" novalidate>
+                        <div class="form-group">
+                            <label for="nombre">Nombre completo <span aria-hidden="true">*</span></label>
+                            <input type="text" id="nombre" placeholder="Ej. María Pérez" required />
+                            <div class="error-msg" id="nombreError">Por favor, ingresa tu nombre completo.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Correo electrónico <span aria-hidden="true">*</span></label>
+                            <input type="email" id="email" placeholder="maria@ejemplo.com" required />
+                            <div class="error-msg" id="emailError">Ingresa un correo electrónico válido.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono <span aria-hidden="true">*</span></label>
+                            <input type="tel" id="telefono" placeholder="300 555 4667" required />
+                            <div class="error-msg" id="telefonoError">Ingresa un número de teléfono válido.</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensaje">Mensaje</label>
+                            <textarea id="mensaje" placeholder="Cuéntanos tu situación..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary"><i class="fas fa-paper-plane"></i> Enviar mensaje</button>
+                        <div class="form-success" id="formSuccess"><i class="fas fa-check-circle"></i> ¡Mensaje enviado! Te contactaremos en menos de 24 horas.</div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+    FOOTER
+    ============================================ -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div>
+                <div class="footer-brand"><i class="fas fa-scale-balanced"></i> Insolv<span>Baq</span></div>
+                <p style="margin-top: 6px;">Consultoría en insolvencia económica para personas naturales.</p>
+            </div>
+            <div class="footer-socials">
+                <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+            <div class="footer-legal">
+                &copy; 2025 InsolvBaq · Todos los derechos reservados · <a href="#">Aviso legal</a> · <a href="#">Política de privacidad</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+    JAVASCRIPT
+    ============================================ -->
     <script>
-        let tipoCreditoActivo = 'hipotecario';
+        (function() {
+            'use strict';
 
-        function cambiarTipo(tipo) {
-            tipoCreditoActivo = tipo;
-            
-            // Actualizar botones de pestañas
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            // ============================================
+            // SCROLL REVEAL (Intersection Observer)
+            // ============================================
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+            revealElements.forEach(el => revealObserver.observe(el));
 
-            // Modificar visibilidad y valores sugeridos según la modalidad colombiana estándar
-            const divCuotaInicial = document.getElementById('divCuotaInicial');
-            const divAmortizacion = document.getElementById('divAmortizacion');
-            const lblMonto = document.getElementById('lblMonto');
-            const lblPlazo = document.getElementById('lblPlazo');
-            
-            if (tipo === 'hipotecario') {
-                lblMonto.textContent = "Valor del Inmueble ($ COP)";
-                lblPlazo.textContent = "Plazo de Amortización (Meses)";
-                divCuotaInicial.style.display = 'block';
-                divAmortizacion.style.display = 'block';
-                document.getElementById('montoPrincipal').value = "150000000";
-                document.getElementById('cuotaInicial').value = "45000000";
-                document.getElementById('tasaAnual').value = "11.5";
-                document.getElementById('plazo').value = "240";
-                document.getElementById('seguroMes').value = "55000";
-                document.getElementById('infoDinamica').innerHTML = "<strong>Análisis del Sistema:</strong> Financiamiento máx del 70% para vivienda NO VIS y 80% para VIS. Estabilidad a largo plazo mediante cuotas fijas en pesos.";
-            } else if (tipo === 'vehiculo') {
-                lblMonto.textContent = "Monto a Financiar el Vehículo ($ COP)";
-                lblPlazo.textContent = "Plazo de Amortización (Meses)";
-                divCuotaInicial.style.display = 'none';
-                divAmortizacion.style.display = 'none';
-                document.getElementById('montoPrincipal').value = "60000000";
-                document.getElementById('tasaAnual').value = "15.5";
-                document.getElementById('plazo').value = "72";
-                document.getElementById('seguroMes').value = "80000"; // Incluye póliza auto todo riesgo endosada
-                document.getElementById('infoDinamica').innerHTML = "<strong>Análisis del Sistema:</strong> El crédito de vehículo suele exigir pignoración del automotor. Las tasas varían si el carro es nuevo o usado.";
-            } else if (tipo === 'libre') {
-                lblMonto.textContent = "Monto del Crédito de Consumo ($ COP)";
-                lblPlazo.textContent = "Plazo Solicitado (Meses)";
-                divCuotaInicial.style.display = 'none';
-                divAmortizacion.style.display = 'none';
-                document.getElementById('montoPrincipal').value = "20000000";
-                document.getElementById('tasaAnual').value = "22.0";
-                document.getElementById('plazo').value = "48";
-                document.getElementById('seguroMes').value = "15000";
-                document.getElementById('infoDinamica').innerHTML = "<strong>Análisis del Sistema:</strong> Libre inversión/Consumo. Tasas más elevadas sujetas al perfil de riesgo. Alerta con la tasa de usura fijada por la Superfinanciera.";
-            } else if (tipo === 'tarjeta') {
-                lblMonto.textContent = "Cupo Utilizado / Avance / Compra ($ COP)";
-                lblPlazo.textContent = "Diferido a Cuotas (Meses)";
-                divCuotaInicial.style.display = 'none';
-                divAmortizacion.style.display = 'none';
-                document.getElementById('montoPrincipal').value = "5000000";
-                document.getElementById('tasaAnual').value = "28.5"; // Cercano a la usura habitual de tarjetas
-                document.getElementById('plazo').value = "24";
-                document.getElementById('seguroMes').value = "6000"; // Seguro de cartera común
-                document.getElementById('infoDinamica').innerHTML = "<strong>Análisis del Sistema:</strong> Compras diferidas a 1 sola cuota por lo general no generan intereses corrientes en Colombia. Evite los avances en efectivo debido a su alto costo inmediato.";
-            }
-            
-            calcularTodo();
-        }
+            // ============================================
+            // FORMULARIO VALIDACIÓN
+            // ============================================
+            const form = document.getElementById('contactForm');
+            const nombre = document.getElementById('nombre');
+            const email = document.getElementById('email');
+            const telefono = document.getElementById('telefono');
+            const nombreError = document.getElementById('nombreError');
+            const emailError = document.getElementById('emailError');
+            const telefonoError = document.getElementById('telefonoError');
+            const successMsg = document.getElementById('formSuccess');
 
-        function calcularTodo() {
-            const montoPrincipal = parseFloat(document.getElementById('montoPrincipal').value) || 0;
-            const cuotaInicial = tipoCreditoActivo === 'hipotecario' ? (parseFloat(document.getElementById('cuotaInicial').value) || 0) : 0;
-            const tasaAnual = parseFloat(document.getElementById('tasaAnual').value) || 0;
-            const plazo = parseInt(document.getElementById('plazo').value) || 0;
-            const seguroMes = parseFloat(document.getElementById('seguroMes').value) || 0;
-
-            const capitalFinanciar = montoPrincipal - cuotaInicial;
-            document.getElementById('resFinanciar').textContent = '$ ' + capitalFinanciar.toLocaleString('es-CO');
-
-            if (capitalFinanciar <= 0 || plazo <= 0 || tasaAnual <= 0) {
-                document.getElementById('resCuotaBase').textContent = "$ 0";
-                document.getElementById('resCuotaTotal').textContent = "$ 0";
-                document.getElementById('resIntereses').textContent = "$ 0";
-                return;
+            function validateName() {
+                const val = nombre.value.trim();
+                if (val.length < 2) {
+                    nombreError.classList.add('visible');
+                    return false;
+                } else {
+                    nombreError.classList.remove('visible');
+                    return true;
+                }
             }
 
-            // Convertir de Efectiva Anual (E.A) a Mensual Vencida (M.V)
-            const tasaMensual = Math.pow(1 + (tasaAnual / 100), 1 / 12) - 1;
-            document.getElementById('resTasaMes').textContent = (tasaMensual * 100).toFixed(2) + '%';
+            function validateEmail() {
+                const val = email.value.trim();
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!re.test(val)) {
+                    emailError.classList.add('visible');
+                    return false;
+                } else {
+                    emailError.classList.remove('visible');
+                    return true;
+                }
+            }
 
-            // Cálculo de la cuota base usando amortización constante (sistema francés)
-            const cuotaBase = (capitalFinanciar * tasaMensual) / (1 - Math.pow(1 + tasaMensual, -plazo));
-            const cuotaTotal = cuotaBase + seguroMes;
-            const totalIntereses = (cuotaBase * plazo) - capitalFinanciar;
+            function validatePhone() {
+                const val = telefono.value.trim();
+                // Acepta números con espacios, guiones, etc. mínimo 6 dígitos
+                const digits = val.replace(/\D/g, '');
+                if (digits.length < 6) {
+                    telefonoError.classList.add('visible');
+                    return false;
+                } else {
+                    telefonoError.classList.remove('visible');
+                    return true;
+                }
+            }
 
-            document.getElementById('resCuotaBase').textContent = '$ ' + Math.round(cuotaBase).toLocaleString('es-CO');
-            document.getElementById('resSeguro').textContent = '$ ' + Math.round(seguroMes).toLocaleString('es-CO');
-            document.getElementById('resCuotaTotal').textContent = '$ ' + Math.round(cuotaTotal).toLocaleString('es-CO');
-            document.getElementById('resIntereses').textContent = '$ ' + Math.round(totalIntereses).toLocaleString('es-CO');
-        }
+            // Validación en tiempo real
+            nombre.addEventListener('input', validateName);
+            email.addEventListener('input', validateEmail);
+            telefono.addEventListener('input', validatePhone);
 
-        // Listener para recálculo dinámico en cualquier interacción
-        document.querySelectorAll('input, select').forEach(element => {
-            element.addEventListener('input', calcularTodo);
-        });
+            // Submit
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const isNameValid = validateName();
+                const isEmailValid = validateEmail();
+                const isPhoneValid = validatePhone();
 
-        // Inicialización en la carga original
-        calcularTodo();
+                if (isNameValid && isEmailValid && isPhoneValid) {
+                    const btn = form.querySelector('.btn-primary');
+                    const originalText = btn.innerHTML;
+                    successMsg.classList.remove('visible');
+
+                    btn.disabled = true;
+                    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+
+                    // Simulamos envío exitoso
+                    setTimeout(() => {
+                        successMsg.classList.add('visible');
+                        btn.innerHTML = '<i class="fas fa-check"></i> Enviado';
+                        form.reset();
+                        document.querySelectorAll('.error-msg').forEach(el => el.classList.remove(
+                        'visible'));
+
+                        // Restauramos botón después de 3 segundos
+                        setTimeout(() => {
+                            btn.disabled = false;
+                            btn.innerHTML = originalText;
+                        }, 3000);
+                    }, 1500);
+                } else {
+                    // Enfocar primer campo inválido
+                    if (!isNameValid) nombre.focus();
+                    else if (!isEmailValid) email.focus();
+                    else if (!isPhoneValid) telefono.focus();
+                }
+            });
+
+            // ============================================
+            // SCROLL SUAVE (para enlaces internos)
+            // ============================================
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        const headerOffset = 80;
+                        const elementPosition = targetEl.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                    }
+                });
+            });
+
+        })();
     </script>
+
 </body>
 </html>
